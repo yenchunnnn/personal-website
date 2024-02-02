@@ -88,7 +88,7 @@ superuser: true
 
 Thanks for stopping by 😄
 
-I'm a junior data analyst. Coming from a background in social psychology and clinical psychology, I'm passionate about solving social problems and mental health issue as well with analytics. I have over 1 year of experience applying psychological research methods in real-world settings, from designing experiments, collecting, preprocessing, analyzing and modeling data to presenting insights.
+I'm a junior data analyst. Coming from a background in social psychology and clinical psychology, I'm passionate about solving social problems and mental health issues as well with analytics. I have over 1 year of experience applying psychological research methods in real-world settings, from designing experiments, collecting, preprocessing, analyzing and modeling data to presenting insights.
 
 If you're looking for someone to drive impact on our society with data, let's chat!
 

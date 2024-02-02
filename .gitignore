@@ -1,6 +1,9 @@
 .Rproj.user
 .Rhistory
 .Rdata
+.Ruserdata
 .httr-oauth
 .DS_Store
 .quarto
+Thumbs.db
+.hugo_build.lock
