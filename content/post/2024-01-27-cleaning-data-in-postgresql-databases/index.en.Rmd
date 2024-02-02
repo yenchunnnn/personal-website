@@ -1,0 +1,140 @@
+---
+title: Create a pivot table in postgresql
+author: Yen Chun Chen
+date: '2024-01-27'
+slug: Create-a-pivot-table-in-postgresql
+categories:
+  - Postgresql
+tags:
+  - R Markdown
+  - Postgresql
+subtitle: ''
+summary: 'Illustrate how to use pivot table to report data more clearly.'
+authors: []
+lastmod: '2024-01-27T14:52:35+08:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+### Setup database table
+
+We will be using a dataset with 5000 New York City parking violation records stored in the `parking_violation` table.
+
+```{r setup}
+# Creating a new database
+# Connect to the default postgres database
+library(DBI)
+con <- dbConnect(RSQLite::SQLite(), "")
+knitr::opts_chunk$set(connection = "con")
+```
+
+```{r include=FALSE}
+# Load dataset
+parking_violation <- read.csv("C:/Users/User/Documents/R Scripts/DataCamp/data/NYC_Open_Data_Parking_Violations_2020.sample5k.csv", na.strings = "")
+```
+
+```{r include=FALSE}
+# Replace column name dots with _
+colnames(parking_violation) <- stringr::str_replace_all(
+    colnames(parking_violation), "\\.", "\\_")
+
+colnames(parking_violation) <- stringr::str_to_lower(
+    colnames(parking_violation))
+```
+
+```{r}
+# Glimpse dataset
+dplyr::glimpse(parking_violation)
+```
+
+```{r}
+# Create database tables
+dbWriteTable(con, "parking_violation", parking_violation)
+dbListTables(con)
+```
+
+```{sql}
+-- Glimpse table
+SELECT *
+FROM parking_violation
+LIMIT 5
+```
+
+### Selecting data
+
+In an effort to get a better understanding of which agencies are responsible for different types of parking violations, you have been tasked with creating a report providing these details.
+
+This report will focus on four issuing agencies:
+
+-   `Police Department` (`P`)
+
+-   `Department of Sanitation` (`S`)
+
+-   `Parks Department` (`K`)
+
+-   `Department of Transportation` (`V`)
+
+An `INTEGER` `violation_code` and `CHAR` `issuing_agency` is recorded for every `parking_violation`.
+
+Here we will write a `SELECT` query that provides the underlying data for the report: the parking violation code, the issuing agency code, and the total number of records with each pair of values.
+
+```{sql}
+SELECT 
+	-- Include the violation code in results
+	violation_code, 
+    -- Include the issuing agency in results
+    issuing_agency, 
+    -- Number of records with violation code/issuing agency
+    COUNT(*) 
+FROM 
+	parking_violation 
+WHERE 
+	-- Restrict the results to the agencies of interest
+	issuing_agency IN ('P', 'S', 'K', 'V') 
+GROUP BY 
+	-- Define GROUP BY columns to ensure correct pair count
+	violation_code, issuing_agency
+ORDER BY 
+	violation_code, issuing_agency;
+```
+
+However, while this representation provides all of the information that we want, *the `violation_code` and `issuing_agency` pairs are repeated throughout the results.*
+
+### Using FILTER to create pivot table
+
+Using the `FILTER` clause to produce results in a pivot table format. This improved presentation of the data can more easily be used in the report for parking violations issued by each of the four agencies of interest.
+
+```{sql}
+SELECT 
+	violation_code, 
+    -- Define the "Police" column
+	COUNT(issuing_agency) FILTER (WHERE issuing_agency = 'P') AS "Police",
+    -- Define the "Sanitation" column
+	COUNT(issuing_agency) FILTER (WHERE issuing_agency = 'S') AS "Sanitation",
+    -- Define the "Parks" column
+	COUNT(issuing_agency) FILTER (WHERE issuing_agency = 'K') AS "Parks",
+    -- Define the "Transportation" column
+	COUNT(issuing_agency) FILTER (WHERE issuing_agency = 'V') AS "Transportation"
+FROM 
+	parking_violation 
+GROUP BY 
+	violation_code
+ORDER BY 
+	violation_code
+```
+
+Notice how much easier the results are to read when presenting the results as a pivot table. The number of violations of each type can be compared across agencies by simply visually scanning the rows.
+
+```{r}
+# Disconnect database
+dbDisconnect(con)
+```
+
+*Notice: this content was edited from Datacamp's exercise.*
