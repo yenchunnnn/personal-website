@@ -34,9 +34,9 @@ The tools include:
 -   PsychoPy
 
     One of the most popular open-source packages for running experiments in psychology, neuroscience and related behavioral sciences.[^1] Here's their [github](https://github.com/psychopy) and [offical website](https://www.psychopy.org/).
-    
-    _(You can also random assign participants to different treatment/control groups by setting additional code components.)_
-    
+
+    *(You can also random assign participants to different treatment/control groups by setting additional code components.)*
+
 -   PsychoJS
 
     The JavaScript port of the PsychoPy library. Its purpose is to make PsychoPy experiments available online, from a web page. Here's their [github](https://github.com/psychopy/psychojs).
@@ -47,13 +47,26 @@ The tools include:
 
 [^1]: Peirce, J. W., Gray, J. R., Simpson, S., MacAskill, M. R., Höchenberger, R., Sogo, H., Kastman, E., Lindeløv, J. (2019). [PsychoPy2: experiments in behavior made easy.](https://link.springer.com/article/10.3758/s13428-018-01193-y) *Behavior Research Methods.* 10.3758/s13428-018-01193-y
 
+Example of the experiment's flow:
+
+``` mermaid
+graph LR
+Aid1([Survey]) -->B(pretest)
+    B -- random assign --> C[Manipulation IV_1]
+    C -->|Group1| D[Manipulation IV_2]
+    C -->|Group2| D[Manipulation IV_2]
+    D -->|Group1| E(postest)
+    D -->|Group2| E(postest)
+    D -->|Group3| E(postest)
+```
+
 What I've utilized in this project:
 
 -   {{< icon name="python" pack="fab" >}} Python
 
--   {{< icon name="r-project" pack="fab" >}} R 
+-   {{< icon name="r-project" pack="fab" >}} R
 
-    - rmarkdown, [OCTA shiny app](https://elinevg.shinyapps.io/OCTA_toolbox/)[^2]
+    -   rmarkdown, [OCTA shiny app](https://elinevg.shinyapps.io/OCTA_toolbox/)[^2]
 
 -   {{< icon name="square-js" pack="fab" >}} JavaScript
 
@@ -61,6 +74,6 @@ What I've utilized in this project:
 
 -   {{< icon name="square-gitlab" pack="fab" >}} Gitlab
 
-[^2]: Van Geert, E., Bossens, C., & Wagemans, J. (2022). The Order & Complexity Toolbox for Aesthetics (OCTA): A systematic approach to study the relations between order, complexity, and aesthetic appreciation. https://doi.org/10.31234/osf.io/2bu8a
+[^2]: Van Geert, E., Bossens, C., & Wagemans, J. (2022). The Order & Complexity Toolbox for Aesthetics (OCTA): A systematic approach to study the relations between order, complexity, and aesthetic appreciation. <https://doi.org/10.31234/osf.io/2bu8a>
 
 Thanks for all contributors in the open science, helping researchers could easily lunch experiments on online platforms without lots of cost. Which is efficient, and good for science community!
