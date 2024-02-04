@@ -1,5 +1,5 @@
 ---
-title: Develope online experiments through Psychopy
+title: Develope Online Experiments through Psychopy
 author: Yen Chun Chen
 date: '2024-01-31'
 slug: psychopy
@@ -51,13 +51,14 @@ Example of the experiment's flow:
 
 ``` mermaid
 graph LR
-Aid1([Survey]) -->B(pretest)
-    B -- random assign --> C[Manipulation IV_1]
-    C -->|Group1| D[Manipulation IV_2]
-    C -->|Group2| D[Manipulation IV_2]
-    D -->|Group1| E(postest)
-    D -->|Group2| E(postest)
-    D -->|Group3| E(postest)
+Aid1([Survey]) -->B(Pretest)
+    B -- Random Assign --> C[Manipulate IV_1]
+    C -->|Group1| D[Manipulate IV_2]
+    C -->|Group2| D[Manipulate IV_2]
+    D -->|Group1| E(Measure DV)
+    D -->|Group2| E(Measure DV)
+    D -->|Group3| E(Measure DV)
+    E --> F(Posttest)
 ```
 
 What I've utilized in this project:
