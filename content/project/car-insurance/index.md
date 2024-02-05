@@ -10,7 +10,7 @@ image:
 #   name: Preview 📖
 #   url: https://yenchunnnn.github.io/CourseNote/
 # slides: example
-summary: I used simple logistic regression, identifying the single feature that results in the best-performing model.
+summary: I used simple logistic regression to identify the single feature that results in the best-performing model.
 categories:
   - R
   - Data science

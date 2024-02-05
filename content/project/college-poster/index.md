@@ -17,7 +17,7 @@ tags:
 - SPSS
 - social interactions
 - Other
-title: Forbearance in close relationships
+title: Forbearance in Close Relationships
 url_code: ""
 url_pdf: ""
 url_slides: "https://github.com/yenchunnnn/presentation/blob/main/college-poster.png"

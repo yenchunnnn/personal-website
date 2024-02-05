@@ -17,11 +17,11 @@ location: No.48, Hsuan Chuang Rd., Hsinchu City 300, Taiwan, R.O.C.
 image:
   caption: 'Photo took at 10-21-2023'
   focal_point: Right
-links:
-- icon: linkedin
-  icon_pack: fab
-  name: Follow
-  url: https://www.linkedin.com/in/yen-chun-chen-profile/
+# links:
+# - icon: linkedin
+#   icon_pack: fab
+#   name: Connect
+#   url: https://www.linkedin.com/in/yen-chun-chen-profile/
 # projects:
 # - example
 # publishDate: "2017-01-01T00:00:00Z"
@@ -41,7 +41,7 @@ This paper is largely based on my master's thesis---
 
 > Chen, Y. C., & Lee, Y. C. (accepted). Love in Everyday Social Interactions Matters: Positivity Resonance Accumulates Meaning in Life. *Chinese Journal of Psychology.* (TSSCI)
 
-What I've utilized in this research:
+What I've done in this research:
 
 -   Research method: day reconstruction method, longitudinal research
 

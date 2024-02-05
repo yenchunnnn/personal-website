@@ -16,7 +16,7 @@ categories:
   - Data science
 tags:
 - R Programming
-- Cluster analysis
+- Cluster Analysis
 title: Clustering Bustabit Gambling Behavior
 url_code: "https://github.com/yenchunnnn/DSproject/blob/main/Clustering%20Bustabit%20Gambling%20Behavior.ipynb"
 url_pdf: ""

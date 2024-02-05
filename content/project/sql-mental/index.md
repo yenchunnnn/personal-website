@@ -10,7 +10,7 @@ image:
 #   name: Preview 📖
 #   url: https://yenchunnnn.github.io/CourseNote/
 # slides: example
-summary: Are international students have a higher risk of mental health difficulties than the general population?
+summary: Exploring whether international students have a higher risk of mental health difficulties than the general population.
 categories:
   - Postgresql
   - Data science
