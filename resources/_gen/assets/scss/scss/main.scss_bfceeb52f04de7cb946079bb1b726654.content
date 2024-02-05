@@ -9225,7 +9225,7 @@ ul.network-icon {
   margin: 0; }
 
 #profile .network-icon {
-  margin-top: 0.5rem; }
+  margin-top: 0.4rem; }
 
 .network-icon li {
   margin-right: 10px; }
@@ -9237,7 +9237,7 @@ ul.network-icon {
   transform: scale(1.2); }
 
 .big-icon {
-  font-size: 2rem; }
+  font-size: 1.5rem; }
 
 ul.ul-interests li {
   font-size: 0.9rem; }

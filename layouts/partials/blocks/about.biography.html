@@ -100,39 +100,6 @@
     </div>
     {{ end }}
 
-    <div class="row">
 
-      {{ with $person.interests }}
-      <div class="col-md-5">
-        <div class="section-subheading">{{ i18n "interests" | markdownify }}</div>
-        <ul class="ul-interests fa-ul mb-0">
-          {{ range . }}
-          <li>
-            <i class="fa-li fa-solid fa-heart"></i>
-            {{ . | markdownify | emojify }}
-          </li>
-          {{ end }}
-        </ul>
-      </div>
-      {{ end }}
-
-      {{ with $person.education }}
-      <div class="col-md-7">
-        <div class="section-subheading">{{ i18n "education" | markdownify }}</div>
-        <ul class="ul-edu fa-ul mb-0">
-          {{ range .courses }}
-          <li>
-            <i class="fa-li fa-solid fa-graduation-cap"></i>
-            <div class="description">
-              <p class="course">{{ .course }}{{ with .year }}, {{ . }}{{ end }}</p>
-              <p class="institution">{{ .institution }}</p>
-            </div>
-          </li>
-          {{ end }}
-        </ul>
-      </div>
-      {{ end }}
-
-    </div>
   </div>
 </div>

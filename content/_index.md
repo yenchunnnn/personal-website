@@ -189,11 +189,11 @@ sections:
     - icon: linkedin
       icon_pack: fab
       link: https://www.linkedin.com/in/yen-chun-chen-profile/
-      name: Follow me on Linkedin
+      name: Connect on Linkedin
     - icon: github
       icon_pack: fab
       link: https://github.com/yenchunnnn
-      name: Follow me on GitHub
+      name: Follow on GitHub
     # address:
     #   city: Stanford
     #   country: United States
