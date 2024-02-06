@@ -2,7 +2,7 @@
 date: "2023-12-28"
 external_link: ""
 image:
-    caption: Photo provided from Datacamp
+    caption: Photo credit by Datacamp
     focal_point: Smart
 # links:
 # - icon: github

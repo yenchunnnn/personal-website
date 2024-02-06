@@ -2,7 +2,7 @@
 date: "2023-12-17"
 external_link: ""
 image:
-    caption: Different impact of handwashing
+    caption: Impact of handwashing
     focal_point: Smart
 # links:
 # - icon: github

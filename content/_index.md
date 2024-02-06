@@ -184,7 +184,7 @@ sections:
 #     columns: "2"
 - block: contact
   content:
-    email: ab3092726@gmail.com
+    email: yenchun.official@gmail.com
     contact_links:
     - icon: linkedin
       icon_pack: fab
