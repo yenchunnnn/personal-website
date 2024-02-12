@@ -11,7 +11,7 @@ tags:
   - Data Management
   - Other
 subtitle: ''
-summary: 'I created online experiments with Psychopy, PsychoJS and Pavlovia. Which enable researchers to collect data on a web page.'
+summary: 'I created online experiments with Psychopy, PsychoJS, and Pavlovia. Which enable researchers to collect data on a web page.'
 authors: []
 lastmod: '2024-01-31T17:09:04+08:00'
 featured: no
@@ -33,21 +33,21 @@ The tools include:
 
 -   PsychoPy
 
-    One of the most popular open-source packages for running experiments in psychology, neuroscience and related behavioral sciences.[^1] Here's their [github](https://github.com/psychopy) and [offical website](https://www.psychopy.org/).
+    One of the most popular open-source packages for running experiments in psychology, neuroscience, and related behavioral sciences.[^1] Here's their [github](https://github.com/psychopy) and [official website](https://www.psychopy.org/).
 
-    *(You can also random assign participants to different treatment/control groups by setting additional code components.)*
+    *(You can also randomly assign participants to different treatment/control groups by setting additional code components.)*
 
 -   PsychoJS
 
-    The JavaScript port of the PsychoPy library. Its purpose is to make PsychoPy experiments available online, from a web page. Here's their [github](https://github.com/psychopy/psychojs).
+    The JavaScript port of the PsychoPy library. Its purpose is to make PsychoPy experiments available online via a web page. Here's their [github](https://github.com/psychopy/psychojs).
 
 -   Pavlovia
 
-    A place for the wide community of researchers in the behavioural sciences to run, share, and explore experiments online. Here's their [offical website](https://pavlovia.org/docs/home/about).
+    A place for the wide community of researchers in the behavioral sciences to run, share, and explore experiments online. Here's their [official website](https://pavlovia.org/docs/home/about).
 
 [^1]: Peirce, J. W., Gray, J. R., Simpson, S., MacAskill, M. R., Höchenberger, R., Sogo, H., Kastman, E., Lindeløv, J. (2019). [PsychoPy2: experiments in behavior made easy.](https://link.springer.com/article/10.3758/s13428-018-01193-y) *Behavior Research Methods.* 10.3758/s13428-018-01193-y
 
-Example of the experiment's flow:
+An example of the experiment's flow:
 
 ``` mermaid
 graph LR
@@ -77,4 +77,4 @@ What I've utilized in this project:
 
 [^2]: Van Geert, E., Bossens, C., & Wagemans, J. (2022). The Order & Complexity Toolbox for Aesthetics (OCTA): A systematic approach to study the relations between order, complexity, and aesthetic appreciation. <https://doi.org/10.31234/osf.io/2bu8a>
 
-Thanks for all contributors in the open science, helping researchers could easily lunch experiments on online platforms without lots of cost. Which is efficient, and good for science community!
+Thanks to all contributors in open science for helping researchers easily conduct experiments on online platforms without a lot of cost. Which is efficient and good for the science community!

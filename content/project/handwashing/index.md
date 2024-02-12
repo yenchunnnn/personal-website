@@ -17,7 +17,7 @@ categories:
 tags:
 - R Programming
 - Data Visualization
-title: Importance of Handwashing
+title: The Importance of Handwashing
 url_code: "https://github.com/yenchunnnn/DSproject/blob/main/Dr.%20Semmelweis%20and%20the%20Importance%20of%20Handwashing.ipynb"
 url_pdf: ""
 url_slides: ""
@@ -28,7 +28,7 @@ url_video: ""
 
 Background
 
-:   Hungarian physician Dr.Semmelweis worked at the Hospital with childbed fever patients. Childbed fever is a deadly disease affecting women who have just given birth, and in the early 1840s, as many as 10% of the women giving birth died from it at the Hospital.
+:   Hungarian physician Dr.Semmelweis worked at the hospital with childbed fever patients. Childbed fever is a deadly disease affecting women who have just given birth, and in the early 1840s, as many as 10% of the women giving birth died from it at the hospital.
 
 
 Task

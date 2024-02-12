@@ -82,8 +82,8 @@ sections:
       tag: '*'
     - name: R Programming
       tag: R Programming
-    - name: Postgresql
-      tag: Postgresql
+    - name: PostgreSQL
+      tag: PostgreSQL
     - name: Other
       tag: Other
     default_button_index: 0

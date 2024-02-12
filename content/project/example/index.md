@@ -10,7 +10,7 @@ links:
   name: Preview 📖
   url: https://yenchunnnn.github.io/CourseNote/
 # slides: example
-summary: I built a Gitbook to manage my notes of the data science courses, including 26 chapters.
+summary: I built a Gitbook to manage my notes for the data science courses, including 26 chapters.
 categories:
   - R
   - Postgresql
@@ -28,7 +28,7 @@ url_slides: ""
 url_video: ""
 ---
 
-This is a notebook about the data science courses I took from the [Datacamp](https://www.datacamp.com/tracks/data-scientist-professional-with-r).
+This is a notebook about the data science courses I took at [Datacamp](https://www.datacamp.com/tracks/data-scientist-professional-with-r).
 
 **Book title:** Data Scientist with R
 

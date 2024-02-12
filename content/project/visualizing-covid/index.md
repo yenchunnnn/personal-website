@@ -28,7 +28,7 @@ url_video: ""
 
 Background
 
-:   In December 2019, COVID-19 was first identified in the China. By March 11, 2020, the WHO categorized the COVID-19 outbreak as a pandemic.
+:   In December 2019, COVID-19 was first identified in the China. By March 11, 2020, the WHO had categorized the COVID-19 outbreak as a pandemic.
 
     How quickly did the virus spread across the globe? Was there any effect from country-wide policies?
 

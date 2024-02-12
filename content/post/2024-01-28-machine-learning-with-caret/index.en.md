@@ -24,6 +24,19 @@ output:
     toc: true
 ---
 
+Overview of this content:
+
+```markmap {height="200px"}
+- Model Selection
+  - Reusing a trainControl
+  - Baseline model: glmnet
+  - Comparison model: random forest
+  - Comparing models
+    - `resamples()` list of models
+    - Plot resamples
+    - Ensembling models: logistic regression
+```
+
 **A real-world example**
 
 -   Data: customer churn at telecom company

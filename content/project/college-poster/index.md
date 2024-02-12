@@ -10,7 +10,7 @@ image:
 #   name: Preview 📖
 #   url: https://yenchunnnn.github.io/CourseNote/
 # slides: example
-summary: I collected data to test how can people practice forbearance still have high relationship satisfaction.
+summary: I collected data to test how people who practice forbearance still have high relationship satisfaction.
 categories:
   - SPSS
 tags:
@@ -34,6 +34,6 @@ What I've done in this study:
 
 - Collected data from real-world
 
-- Cleaning and analyzed data with SPSS
+- Cleaning and analyzing data with SPSS
 
 - Presented outcomes through a poster

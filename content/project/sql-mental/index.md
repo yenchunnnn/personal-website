@@ -2,7 +2,7 @@
 date: "2023-12-17"
 external_link: ""
 image:
-    caption: Photo provided by Datacamp
+    caption: Photo credit by Datacamp
     focal_point: Smart
 # links:
 # - icon: github
@@ -27,9 +27,9 @@ url_video: ""
 
 Background
 
-:   Does going to university in a different country affect your mental health? A study found that international students have a higher risk of mental health difficulties than the general population, and that social connectedness and acculturative stress are predictive of depression.
+:   Does going to university in a different country affect your mental health? A study found that international students have a higher risk of mental health difficulties than the general population and that social connectedness and acculturative stress are predictive of depression.
 
 
 Task
 
-:   Find out if would come to a similar conclusion for international students and see if the length of stay is a contributing factor.
+:   Find out if you would come to a similar conclusion for international students and see if the length of stay is a contributing factor.

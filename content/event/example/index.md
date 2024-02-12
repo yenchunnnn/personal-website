@@ -26,7 +26,7 @@ image:
 # - example
 # publishDate: "2017-01-01T00:00:00Z"
 # slides: example
-summary: I gave an oral presentation on 62nd Taiwan Psychology Annual Conference. The paper is accepted by _Chinese Journal of Psychology (TSSCI)_. It's the first time I've come across <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> when working with this research. Since then, I'm stick with it!  
+summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. The paper has been accepted by the Chinese Journal of Psychology (TSSCI). It’s the first time I’ve come across <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> when working on this research. Since then, I've stuck with it!  
 tags: [R Programming, longitudinal research, meaning in life, positive emotions, social interactions]
 title: Love and Meaning in Life
 url_code: ""
@@ -35,9 +35,9 @@ url_slides: ""
 url_video: ""
 ---
 
-The conference was host by Taiwanese Psychological Association.
+The conference was hosted by the Taiwanese Psychological Association.
 
-This paper is largely based on my master's thesis---
+This paper is largely based on my master's thesis ---
 
 > Chen, Y. C., & Lee, Y. C. (accepted). Love in Everyday Social Interactions Matters: Positivity Resonance Accumulates Meaning in Life. *Chinese Journal of Psychology.* (TSSCI)
 
@@ -45,10 +45,10 @@ What I've done in this research:
 
 -   Research method: day reconstruction method, longitudinal research
 
-    -   Held 6 real-time or online group debriefing to recruit participants, with only 4.9% attrition rate at time 1.
+    -   Held six real-time or online group debriefings to recruit participants, with only a 4.9% attrition rate at time 1.
     
     - Used Qualtrics to collect data.
 
 -   Statistical model: multilevel structural equation modeling
 
-    -   Learned how to use <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> to analyze in one month.
+    -   I learned how to use <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> to analyze in one month.

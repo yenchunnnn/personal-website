@@ -1,21 +1,21 @@
 ---
-title: Create a pivot table in postgresql
+title: Create a pivot table in PostgreSQL
 author: Yen Chun Chen
 date: '2024-01-27'
-slug: Create-a-pivot-table-in-postgresql
+slug: Create-a-pivot-table-in-PostgreSQL
 categories:
   - Postgresql
 tags:
   - R Markdown
   - Postgresql
 subtitle: ''
-summary: 'Illustrate how to use pivot table to report data more clearly.'
+summary: 'Illustrate how to use a pivot table to report data more clearly.'
 authors: []
 lastmod: '2024-01-27T14:52:35+08:00'
 featured: no
 image:
-  caption: ''
-  focal_point: ''
+  caption: 'Friends scenes'
+  focal_point: 'smart'
   preview_only: no
 projects: []
 output:
@@ -23,13 +23,15 @@ output:
     toc: true
 ---
 
+Pivots don't always make people crazy! It could sometimes give us a clear view of the mess data, let's see how it works!
+
 ### Setup database table
 
 We will be using a dataset with 5000 New York City parking violation records stored in the `parking_violation` table.
 
 ```{r setup}
-# Creating a new database
-# Connect to the default postgres database
+# Creating a temporal database, only RSQLite has this feature so far
+# Connect to the default database
 library(DBI)
 con <- dbConnect(RSQLite::SQLite(), "")
 knitr::opts_chunk$set(connection = "con")
@@ -137,4 +139,4 @@ Notice how much easier the results are to read when presenting the results as a 
 dbDisconnect(con)
 ```
 
-*Notice: this content was edited from Datacamp's exercise.*
+*Notice: This content was edited from DataCamp's exercise.*

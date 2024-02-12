@@ -28,7 +28,7 @@ url_video: ""
 
 Background
 
-:   The Road car insurance has requested the services in building a model to predict whether a customer will make a claim on their insurance during the policy period.
+:   Road Car Insurance has requested services in building a model to predict whether a customer will make a claim on their insurance during the policy period.
 
 
 Task
