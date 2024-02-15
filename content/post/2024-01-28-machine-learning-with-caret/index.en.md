@@ -12,11 +12,11 @@ tags:
 subtitle: ''
 summary: 'Predict which customers will churn at a real-world telecom company.'
 authors: []
-lastmod: '2024-01-28T16:29:18+08:00'
+lastmod: '2024-02-08T16:29:18+08:00'
 featured: no
 image:
-  caption: ''
-  focal_point: ''
+  caption: 'Friends scenes from Reddit'
+  focal_point: 'smart'
   preview_only: no
 projects: []
 output:

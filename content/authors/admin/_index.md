@@ -67,7 +67,7 @@ social:
   link: https://www.linkedin.com/in/yen-chun-chen-profile/
 - icon: cv
   icon_pack: ai
-  link: uploads/resume.pdf
+  link: cv/cv_20240215.pdf
 # - display:
 #     header: true
 #   icon: twitter
@@ -86,9 +86,9 @@ superuser: true
 #highlight_name: true
 ---
 
-Thanks for stopping by. {{< icon name="face-laugh-beam" pack="far" >}}
+Thanks for stopping by! {{< icon name="face-laugh-beam" pack="far" >}}
 
-I’m Jessica Chen, a data analyst. Coming from a background in social psychology and clinical psychology, I’m passionate about solving social problems and mental health issues with analytics as well. I have over 1 year of experience applying psychological research methods in real-world settings, from designing experiments, collecting, preprocessing, analyzing, and modeling data to presenting insights.
+I’m a data analyst. Coming from a background in social psychology and clinical psychology, I’m passionate about solving social problems and mental health issues with analytics as well. I have over 1 year of experience applying psychological research methods in real-world settings, from designing experiments, collecting, preprocessing, analyzing, and modeling data to presenting insights.
 
 If you’re looking for someone to drive impact in our society with data, let’s chat!
 

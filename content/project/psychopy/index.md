@@ -11,7 +11,7 @@ tags:
   - Data Management
   - Other
 subtitle: ''
-summary: 'I created online experiments with Psychopy, PsychoJS, and Pavlovia. Which enable researchers to collect data on a web page.'
+summary: 'I created online experiments with PsychoPy, PsychoJS, and Pavlovia. Which enable researchers to collect data on a web page.'
 authors: []
 lastmod: '2024-01-31T17:09:04+08:00'
 featured: no
