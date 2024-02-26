@@ -67,7 +67,7 @@ social:
   link: https://www.linkedin.com/in/yen-chun-chen-profile/
 - icon: cv
   icon_pack: ai
-  link: cv/cv_20240215.pdf
+  link: files/cv.pdf
 # - display:
 #     header: true
 #   icon: twitter
@@ -88,10 +88,10 @@ superuser: true
 
 Thanks for stopping by! {{< icon name="face-laugh-beam" pack="far" >}}
 
-I’m a data analyst. Coming from a background in social psychology and clinical psychology, I’m passionate about solving social problems and mental health issues with analytics as well. I have over 1 year of experience applying psychological research methods in real-world settings, from designing experiments, collecting, preprocessing, analyzing, and modeling data to presenting insights.
+I’m a data analyst with a master's in psychology. Coming from a background in social psychology and clinical psychology, I’m passionate about solving social problems and mental health issues with analytics as well. I have over 1 year of experience applying psychological research methods in real-world settings, from designing experiments, collecting, preprocessing, analyzing, and modeling data to presenting insights.
 
-If you’re looking for someone to drive impact in our society with data, let’s chat!
+If you’re looking for someone to drive impact in our society with data, let’s chat! 
 
-> Interests: Machine Learning {{< icon name="chart-line" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Social Psychology {{< icon name="handshake-simple" pack="fas" >}}
+> Interests: Machine Learning {{< icon name="chart-line" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Social Interaction {{< icon name="handshake-simple" pack="fas" >}}
 
 {style="text-align: justify;"}

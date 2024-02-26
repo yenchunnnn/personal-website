@@ -14,7 +14,7 @@ authors: []
 lastmod: '2024-01-27T14:52:35+08:00'
 featured: no
 image:
-  caption: 'Friends scenes'
+  caption: 'Friends scenes from Reddit'
   focal_point: 'smart'
   preview_only: no
 projects: []
@@ -27,7 +27,7 @@ Pivots don't always make people crazy! It could sometimes give us a clear view o
 
 ### Setup database table
 
-We will be using a dataset with 5000 New York City parking violation records stored in the `parking_violation` table.
+We will use a dataset with New York City parking violation records.
 
 ```{r setup}
 # Creating a temporal database, only RSQLite has this feature so far
@@ -56,24 +56,27 @@ colnames(parking_violation) <- stringr::str_to_lower(
 dplyr::glimpse(parking_violation)
 ```
 
+
 ```{r}
 # Create database tables
 dbWriteTable(con, "parking_violation", parking_violation)
 dbListTables(con)
 ```
 
-```{sql}
--- Glimpse table
-SELECT *
-FROM parking_violation
-LIMIT 5
-```
 
 ### Selecting data
 
-In an effort to get a better understanding of which agencies are responsible for different types of parking violations, you have been tasked with creating a report providing these details.
+Suppose we want to get a better understanding of which agencies (`issuing_agency`) are responsible for different types of parking violations (`violation_code`).
 
-This report will focus on four issuing agencies:
+```{sql}
+-- How many type of agency: 11
+SELECT issuing_agency, COUNT(*) AS N
+FROM parking_violation
+GROUP BY issuing_agency
+ORDER BY N DESC
+```
+
+These four agencies will be our main focus:
 
 -   `Police Department` (`P`)
 
@@ -83,15 +86,20 @@ This report will focus on four issuing agencies:
 
 -   `Department of Transportation` (`V`)
 
-An `INTEGER` `violation_code` and `CHAR` `issuing_agency` is recorded for every `parking_violation`.
+### Without a pivot table
 
-Here we will write a `SELECT` query that provides the underlying data for the report: the parking violation code, the issuing agency code, and the total number of records with each pair of values.
+Here we will write a `SELECT` query that contains three columns:
+
+- parking violation code
+
+- issuing agency code
+
+- total number of records with each combination
+
 
 ```{sql}
 SELECT 
-	-- Include the violation code in results
 	violation_code, 
-    -- Include the issuing agency in results
     issuing_agency, 
     -- Number of records with violation code/issuing agency
     COUNT(*) 
@@ -107,11 +115,11 @@ ORDER BY
 	violation_code, issuing_agency;
 ```
 
-However, while this representation provides all of the information that we want, *the `violation_code` and `issuing_agency` pairs are repeated throughout the results.*
+The result shows the `violation_code` and `issuing_agency` pairs are repeated throughout the outcomes, ending up with 93 rows!
 
-### Using FILTER to create pivot table
+### With a pivot table
 
-Using the `FILTER` clause to produce results in a pivot table format. This improved presentation of the data can more easily be used in the report for parking violations issued by each of the four agencies of interest.
+To generate the results in a pivot table format, we will use the `FILTER` clause. It is now easier to present the parking violation by agency for all four with this modified data format.
 
 ```{sql}
 SELECT 
@@ -132,11 +140,11 @@ ORDER BY
 	violation_code
 ```
 
-Notice how much easier the results are to read when presenting the results as a pivot table. The number of violations of each type can be compared across agencies by simply visually scanning the rows.
+When the results are shown in a pivot table, by just looking at the rows, it is possible to compare the number of violations for each agency.
 
 ```{r}
 # Disconnect database
 dbDisconnect(con)
 ```
 
-*Notice: This content was edited from DataCamp's exercise.*
+*Notice: This content was modified from an exercise on DataCamp.*

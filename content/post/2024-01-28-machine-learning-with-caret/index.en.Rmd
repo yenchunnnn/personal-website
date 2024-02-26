@@ -1,5 +1,5 @@
 ---
-title: Machine Learning with caret - model selection
+title: Model selection in the caret package
 author: Yen Chun Chen
 date: '2024-01-28'
 slug: machine-learning-with-caret
@@ -10,7 +10,7 @@ tags:
   - Data Science
   - R Programming
 subtitle: ''
-summary: 'Predict which customers will churn at a real-world telecom company.'
+summary: 'Comparing the performance of glmnet and gradient boosting with a real-world customer churn dataset.'
 authors: []
 lastmod: '2024-02-08T16:29:18+08:00'
 featured: no
@@ -24,49 +24,27 @@ output:
     toc: true
 ---
 
-Overview of this content:
-
-```markmap {height="200px"}
-- Model Selection
-  - Reusing a trainControl
-  - Baseline model: glmnet
-  - Comparison model: random forest
-  - Comparing models
-    - `resamples()` list of models
-    - Plot resamples
-    - Ensembling models: logistic regression
-```
-
-**A real-world example**
+**Mission**
 
 -   Data: customer churn at telecom company
 
--   Task: predict which customers will cancel their service (or churn).
+-   Task: predict which customers will churn
 
-**Approach: selecting models**
+**Approach**
 
--   Fit different models and choose the best: `glmnet` & `rf`
+-   Fit different models and choose the best
 
 -   Models must use the same training/test splits: `createFolds()`
 
 -   Create a shared `trainControl` object
 
-    -   can use the same `summaryFunction` and tuning parameters for multiple models.
-
-    -   don't have to repeat code when fitting multiple models.
-
-    -   can compare models on the exact same training and test data.
-
-## 1.Reusing a trainControl
-
-The first order of business is to create a reusable `trainControl` object you can use to reliably compare them.
+## Load dataframe
 
 ```{r message=FALSE, warning=FALSE}
 # library package
 library(tidyverse)
 library(caret)
 ```
-
 
 ```{r include=FALSE}
 # load data
@@ -83,35 +61,30 @@ glimpse(churn_x)
 str(churn_y)
 ```
 
-Use `createFolds()` to create 5 CV folds on target variable.
+## Create a reusable trainControl
 
-```{r}
-# Create custom indices: myFolds
-set.seed(12556)
-myFolds <- createFolds(churn_y, k = 5)
-myFolds
-```
-
-Pass `myFold` to `index` to create a reusable `trainControl` for comparing models.
+Use `createFolds()` to create 5 CV folds on target variable. And then Pass `myFold` to `index` to create a reusable `trainControl` for model comparison.
 
 ```{r message=FALSE, warning=FALSE}
-# Create reusable trainControl object: myControl
+# Create custom indices
+set.seed(12556)
+myFolds <- createFolds(churn_y, k = 5)
+
+# Create reusable trainControl
 myControl <- trainControl(
   summaryFunction = twoClassSummary,
-  classProbs = TRUE, # IMPORTANT!
-  verboseIter = TRUE,
+  classProbs = TRUE,
+  verboseIter = FALSE,
   savePredictions = TRUE,
   index = myFolds    # reuse to compare model
 )
 ```
 
-By saving the indexes in the train control, we can fit many models using the same CV folds.
+## Fit baseline model
 
-## 2.Fit glmnet model
+### glmnet model
 
 -   Linear model with built-in variable selection
-
--   Great baseline model
 
 -   Advantages
 
@@ -119,27 +92,19 @@ By saving the indexes in the train control, we can fit many models using the sam
 
     -   Ignores noisy variables
 
-    -   Provides interpretable coefficients
-
-### Baseline model
-
-Now that we have a reusable `trainControl` object called `myControl`, we can start fitting different predictive models to the churn dataset and evaluate their predictive accuracy.
-
-`glmnet`, which penalizes linear and logistic regression models on the size and number of coefficients to help prevent overfitting.
+    -   Provides interpretable coefficients (alpha & lambda)
 
 ```{r message=FALSE, warning=FALSE}
-# Fit glmnet model: model_glmnet
+# Fit glmnet model
 model_glmnet <- train(
   x = churn_x, 
   y = churn_y,
   metric = "ROC",
   method = "glmnet",
-  trControl = myControl
+  trControl = myControl,
+  tuneLength = 5
 )
-```
 
-```{r}
-# print model
 model_glmnet
 ```
 
@@ -147,86 +112,65 @@ model_glmnet
 
 ```{r}
 # result model
-plot(model_glmnet)
+ggplot(model_glmnet)
 ```
 
-Plot the coefficients
+## Fit comparison model
 
-```{r}
-# Plot coefficients
-plot(model_glmnet$finalModel)
-```
+### Gradient boosting
 
-See how our best model evolves as we increase or decrease the penalty on the coefficients.
+-   A powerful ensemble techniques that combines several weak learners into strong learners.
 
-## 3.Fit random forest model
+-   Each new model is trained to minimize the error of the previous model using gradient descent (so they're sequentially).
 
--   Slower to fit than glmnet
-
--   Less interpretable
-
--   Often (but not always) more accurate than glmnet
-
--   Easier to tune
-
--   Require little preprocessing
-
--   Capture threshold effects and variable interactions
-
-### Comparison model
-
-Random forest, which combines an ensemble of non-linear decision trees into a highly flexible (and usually quite accurate) model.
+-   Usually get a higher performance than glmnet.
 
 ```{r message=FALSE, warning=FALSE}
-# Fit random forest: model_rf
-model_rf <- train(
+set.seed(234)
+
+# Fit gradient boosting
+model_sgb <- train(
   x = churn_x, 
   y = churn_y,
   metric = "ROC",
-  method = "ranger",
-  trControl = myControl
+  method = "gbm",
+  trControl = myControl,
+  tuneGrid = expand.grid(interaction.depth = 3:8,
+                         shrinkage = 0.15,
+                         n.trees = c(150, 200, 250),
+                         n.minobsinnode = 2:3),
+  verbose = F
 )
-```
 
-```{r}
-# print model
-model_rf
+model_sgb
 ```
 
 ### Visualize results
 
 ```{r}
-# visualize random forest model
-plot(model_rf)
+# visualize gradient boosting
+ggplot(model_sgb)
 ```
 
-This random forest uses the custom CV folds, so we can easily compare it to the baseline model.
+## Comparing models
 
-## 4.Comparing models
+Selection criteria:
 
--   Make sure they were fit on the same data!
+-   Highest average ROC
 
--   Selection criteria
+-   Lowest standard deviation in ROC
 
-    -   Highest average AUC
+### Create a resamples object
 
-    -   Lowest standard deviation in AUC
+Let's evaluate their out-of-sample predictions and see which model performs best with the dataset.
 
--   Use the `resamples()` function 
-
-### Create resamples object
-
-Now let's compare their out-of-sample predictions and choose which one is the best model for the dataset.
-
-Using the `resamples()` function, provided they have the *same training data* and use the *same `trainControl` object* with preset cross-validation folds.
-
-`resamples()` takes as input *a list of models* and can be used to compare dozens of models at once.
+`resamples()` function takes a list of models as input and can be used to compare dozens of models at once, but you must ensure that each model has the same training data --- that is, the same CV folds --- and `trainControl`.
 
 ```{r}
 # Create model_list
-model_list <- list(glmnet = model_glmnet, rf = model_rf)
+model_list <- list(glmnet = model_glmnet, sgb = model_sgb)
 
-# Pass model_list to resamples(): resamples
+# Pass model_list to resamples()
 resamples <- resamples(model_list)
 
 # Summarize the results
@@ -237,72 +181,70 @@ summary(resamples)
 
 **box-and-whisker plot**
 
-In general, we want the model with the higher median AUC, as well as a smaller range between min and max AUC.
+A higher median (black dot) of the ROC as well as a smaller range between the min and max of the ROC are preferred.
 
-If you do not specify a metric to plot, `bwplot()` will automatically plot 3 of them (ROC, Sens, Spec).
-
-Black dot is the median.
 
 ```{r}
 # Create bwplot
 bwplot(resamples, metric = "ROC")
 ```
 
+Gradient boosting has higher median and smaller range of ROC, so it's better than glmnet.
+
 **Scatter plot**
 
-It's particularly useful for identifying if one model is consistently better than the other across all folds, or if there are situations when the inferior model produces better predictions on a particular subset of the data.
+A scatter plot can help us determine whether one model outperforms the other across all folds.
 
 ```{r}
 # Create xyplot
 xyplot(resamples, metric = "ROC")
 ```
 
-**Dot plot**
+There's one fold of data where glmnet is better than gradient boosting.
 
-```{r}
-dotplot(resamples, metric = "ROC")
-```
-
-**Density plot**
-
-```{r}
-densityplot(resamples, metric = "ROC")
-```
 
 ### Ensembling models
 
-Below show how to fit a stacked ensemble of models using the `caretEnsemble` package.
+Another approach is using the `caretEnsemble` package to construct a list of caret models (`caretList`), which will use the same resampling folds too.
 
-`caretEnsemble` provides the `caretList()` function for creating multiple `caret` models at once on the same dataset, using the same resampling folds. We can also create our own lists of `caret` models.
-
-Here, use the `caretStack()` function to make a stack of `caret` models, with the two sub-models (`glmnet` and `ranger`) feeding into another `caret` model.
 
 ```{r message=FALSE, warning=FALSE}
+library(caretEnsemble)
+
+set.seed(234)
+
 # creat caretList object
-model_list <- caretEnsemble::caretList(
+model_carlist <- caretList(
     x = churn_x,
     y = churn_y,
-    methodList = c("glmnet", "ranger"),
-    trControl = myControl
+    metric="ROC",
+    trControl = myControl,
+    tuneList = list(
+        glmnet = caretModelSpec(method = "glmnet", tuneLength = 5),
+        gbm = caretModelSpec(method = "gbm", 
+                             tuneGrid = expand.grid(interaction.depth = 3:8,
+                                        shrinkage = 0.15,
+                                        n.trees = c(150, 200, 250),
+                                        n.minobsinnode = 2:3),
+                             verbose = F)
+    )
 )
+
+model_carlist
 ```
 
-```{r}
-# print model list
-model_list
-```
+You can see that the attrition class of the object was `caretList`.
 
-Ensemble the two models using a logistic regression.
+Now let's use logistic regression to ensemble the two models.
 
 ```{r}
-# Create ensemble model: stack
-stack <- caretEnsemble::caretStack(model_list, method = "glm")
+# Create ensemble model
+stack <- caretStack(model_carlist, method = "glm")
 
 # Look at summary
 summary(stack)
 ```
 
-In conclusion, we can see from the output that **random forest model is better than glmnet model on churn data**.
+Finally, based on the plots and statistical results of comparing models, gradient boosting performs marginally better than the glmnet model on this churn data.
 
-
-*Notice: this content is based on Datacamp's exercise.*
+*Notice: The dataset is from DataCamp's exercise.*

@@ -14,7 +14,7 @@ authors: []
 lastmod: '2024-01-27T14:52:35+08:00'
 featured: no
 image:
-  caption: 'Friends scenes'
+  caption: 'Friends scenes from Reddit'
   focal_point: 'smart'
   preview_only: no
 projects: []
@@ -27,7 +27,7 @@ Pivots don't always make people crazy! It could sometimes give us a clear view o
 
 ### Setup database table
 
-We will be using a dataset with 5000 New York City parking violation records stored in the `parking_violation` table.
+We will use a dataset with New York City parking violation records.
 
 
 ```r
@@ -97,6 +97,7 @@ dplyr::glimpse(parking_violation)
 ```
 
 
+
 ```r
 # Create database tables
 dbWriteTable(con, "parking_violation", parking_violation)
@@ -108,34 +109,41 @@ dbListTables(con)
 ```
 
 
+### Selecting data
+
+Suppose we want to get a better understanding of which agencies (`issuing_agency`) are responsible for different types of parking violations (`violation_code`).
+
+
 ```sql
--- Glimpse table
-SELECT *
+-- How many type of agency: 11
+SELECT issuing_agency, COUNT(*) AS N
 FROM parking_violation
-LIMIT 5
+GROUP BY issuing_agency
+ORDER BY N DESC
 ```
 
 
 <div class="knitsql-table">
 
 
-Table: <span id="tab:unnamed-chunk-5"></span>Table 1: 5 records
+Table: <span id="tab:unnamed-chunk-5"></span>Table 1: Displaying records 1 - 10
 
-| summons_number|plate_id |registration_state |plate_type |issue_date | violation_code|vehicle_body_type |vehicle_make |issuing_agency | street_code1| street_code2| street_code3| vehicle_expiration_date| violation_location| violation_precinct| issuer_precinct| issuer_code|issuer_command | issuer_squad|violation_time |time_first_observed |violation_county |violation_in_front_of_or_opposite |house_number |street_name        |intersecting_street | date_first_observed| law_section|sub_division | violation_legal_code|days_parking_in_effect |from_hours_in_effect |to_hours_in_effect |vehicle_color | unregistered_vehicle_| vehicle_year|meter_number | feet_from_curb| violation_post_code|violation_description | no_standing_or_stopping_violation| hydrant_violation| double_parking_violation|
-|--------------:|:--------|:------------------|:----------|:----------|--------------:|:-----------------|:------------|:--------------|------------:|------------:|------------:|-----------------------:|------------------:|------------------:|---------------:|-----------:|:--------------|------------:|:--------------|:-------------------|:----------------|:---------------------------------|:------------|:------------------|:-------------------|-------------------:|-----------:|:------------|--------------------:|:----------------------|:--------------------|:------------------|:-------------|---------------------:|------------:|:------------|--------------:|-------------------:|:---------------------|---------------------------------:|-----------------:|------------------------:|
-|     1447152396|JET2661  |NY                 |PAS        |06/28/2019 |             21|SDN               |BMW          |P              |        27390|        36290|        36350|                20210306|                 26|                 26|              26|      964055|0026           |            0|1000A          |NA                  |NY               |F                                 |21           |OLD BROADWAY       |NA                  |                   0|         408|D1           |                   NA|BYBBYBB                |0900A                |1030A              |GRY           |                     0|            0|-            |              0|                  NA|NA                    |                                NA|                NA|                       NA|
-|     1447152402|JCV6523  |NY                 |PAS        |06/28/2019 |             20|SDN               |TOYOT        |P              |        36290|        27390|        13113|                20210109|                 26|                 26|              26|      964055|0026           |            0|1011A          |NA                  |NY               |F                                 |545          |W 126 STREET       |NA                  |                   0|         408|D1           |                   NA|BBBBBBB                |ALL                  |ALL                |GY            |                     0|            0|-            |              0|                  NA|NA                    |                                NA|                NA|                       NA|
-|     1447152554|GMK6954  |NY                 |PAS        |06/16/2019 |             19|SUBN              |BMW          |P              |        36270|        11710|        27390|                20190720|                 26|                 26|              26|      927590|0026           |            0|0107A          |NA                  |NA               |F                                 |509          |W 125 ST           |NA                  |                   0|         408|F1           |                   NA|BBBBBBB                |ALL                  |ALL                |BLK           |                     0|         2019|-            |              0|                  NA|NA                    |                                NA|                NA|                       NA|
-|     1447152580|JGX1641  |NY                 |PAS        |06/24/2019 |             19|SDN               |AUDI         |P              |        36270|        11710|        27390|                20210408|                 26|                 26|              26|      927590|0026           |            0|0300A          |NA                  |NA               |F                                 |501          |W 125 ST           |NA                  |                   0|         408|F2           |                   NA|BBBBBBB                |ALL                  |ALL                |BLK           |                     0|         2015|-            |              0|                  NA|NA                    |                                NA|                NA|                       NA|
-|     1447152724|GDM8069  |NY                 |COM        |07/06/2019 |             48|NA                |NA           |P              |        31190|        36310|        36330|                20210109|                 26|                 26|              26|      963447|0026           |            0|0653A          |NA                  |NY               |F                                 |341          |ST NICHOLAS AVENUE |NA                  |                   0|         408|F1           |                   NA|BBBBBBB                |ALL                  |ALL                |NA            |                     0|            0|-            |              0|                  NA|NA                    |                                NA|                NA|                       NA|
+|issuing_agency |    N|
+|:--------------|----:|
+|P              | 4068|
+|X              |  495|
+|S              |  330|
+|K              |   59|
+|V              |   15|
+|C              |   15|
+|F              |   11|
+|H              |    3|
+|D              |    2|
+|T              |    1|
 
 </div>
 
-### Selecting data
-
-In an effort to get a better understanding of which agencies are responsible for different types of parking violations, you have been tasked with creating a report providing these details.
-
-This report will focus on four issuing agencies:
+These four agencies will be our main focus:
 
 -   `Police Department` (`P`)
 
@@ -145,16 +153,21 @@ This report will focus on four issuing agencies:
 
 -   `Department of Transportation` (`V`)
 
-An `INTEGER` `violation_code` and `CHAR` `issuing_agency` is recorded for every `parking_violation`.
+### Without a pivot table
 
-Here we will write a `SELECT` query that provides the underlying data for the report: the parking violation code, the issuing agency code, and the total number of records with each pair of values.
+Here we will write a `SELECT` query that contains three columns:
+
+- parking violation code
+
+- issuing agency code
+
+- total number of records with each combination
+
 
 
 ```sql
 SELECT 
-	-- Include the violation code in results
 	violation_code, 
-    -- Include the issuing agency in results
     issuing_agency, 
     -- Number of records with violation code/issuing agency
     COUNT(*) 
@@ -191,11 +204,11 @@ Table: <span id="tab:unnamed-chunk-6"></span>Table 2: Displaying records 1 - 10
 
 </div>
 
-However, while this representation provides all of the information that we want, *the `violation_code` and `issuing_agency` pairs are repeated throughout the results.*
+The result shows the `violation_code` and `issuing_agency` pairs are repeated throughout the outcomes, ending up with 93 rows!
 
-### Using FILTER to create pivot table
+### With a pivot table
 
-Using the `FILTER` clause to produce results in a pivot table format. This improved presentation of the data can more easily be used in the report for parking violations issued by each of the four agencies of interest.
+To generate the results in a pivot table format, we will use the `FILTER` clause. It is now easier to present the parking violation by agency for all four with this modified data format.
 
 
 ```sql
@@ -238,7 +251,7 @@ Table: <span id="tab:unnamed-chunk-7"></span>Table 3: Displaying records 1 - 10
 
 </div>
 
-Notice how much easier the results are to read when presenting the results as a pivot table. The number of violations of each type can be compared across agencies by simply visually scanning the rows.
+When the results are shown in a pivot table, by just looking at the rows, it is possible to compare the number of violations for each agency.
 
 
 ```r
@@ -246,4 +259,4 @@ Notice how much easier the results are to read when presenting the results as a 
 dbDisconnect(con)
 ```
 
-*Notice: This content was edited from DataCamp's exercise.*
+*Notice: This content was modified from an exercise on DataCamp.*

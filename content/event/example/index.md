@@ -26,9 +26,9 @@ image:
 # - example
 # publishDate: "2017-01-01T00:00:00Z"
 # slides: example
-summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. The paper has been accepted by the Chinese Journal of Psychology (TSSCI). It’s the first time I’ve come across <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> when working on this research. Since then, I've stuck with it!  
+summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. This research paper was accepted by the Chinese Journal of Psychology. The primary statistical model was multilevel structural equation modeling.
 tags: [R Programming, longitudinal research, meaning in life, positive emotions, social interactions]
-title: Love and Meaning in Life
+title: Positivity Resonance Accumulates Meaning in Life
 url_code: ""
 url_pdf: "https://github.com/yenchunnnn/presentation/blob/main/conference-oral-present_NoCopy.pdf"
 url_slides: ""
@@ -43,12 +43,14 @@ This paper is largely based on my master's thesis ---
 
 What I've done in this research:
 
--   Research method: day reconstruction method, longitudinal research
+-   Research method: Day Reconstruction Method, Longitudinal Research
 
     -   Held six real-time or online group debriefings to recruit participants, with only a 4.9% attrition rate at time 1.
-    
-    - Used Qualtrics to collect data.
 
--   Statistical model: multilevel structural equation modeling
+    -   Used Qualtrics to collect data.
 
-    -   I learned how to use <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> to analyze in one month.
+-   Statistical model: Multilevel Structural Equation Modeling
+
+    -   I learned how to use R to analyze in one month.
+
+It's the first time I've come across <i class="fab fa-r-project" aria-hidden="true" style="color:#035AA6"></i> when working on this research. Since then, I've stuck with it! 🤩
