@@ -30,7 +30,7 @@ summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Confer
 tags: [R Programming, longitudinal research, meaning in life, positive emotions, social interactions]
 title: Positivity Resonance Accumulates Meaning in Life
 url_code: ""
-url_pdf: "https://github.com/yenchunnnn/presentation/blob/main/conference-oral-present_NoCopy.pdf"
+url_pdf: "files/oral-present-provement.pdf"
 url_slides: ""
 url_video: ""
 ---
@@ -45,7 +45,7 @@ What I've done in this research:
 
 -   Research method: Day Reconstruction Method, Longitudinal Research
 
-    -   Held six real-time or online group debriefings to recruit participants, with only a 4.9% attrition rate at time 1.
+    -   Held six real-time or online group debriefings to recruit participants, maintaining a 4.9% attrition rate at time 1.
 
     -   Used Qualtrics to collect data.
 

@@ -19,8 +19,8 @@ tags:
 - Other
 title: Forbearance in Close Relationships
 url_code: ""
-url_pdf: ""
-url_slides: "https://github.com/yenchunnnn/presentation/blob/main/college-poster.png"
+url_pdf: "files/college-poster.pdf"
+url_slides: ""
 url_video: ""
 ---
 

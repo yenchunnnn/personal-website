@@ -1,6 +1,6 @@
 ---
 title: ""
-bio: My research interests include data analysis, emotion, and social interaction.
+bio: I hold a MSc in psychology. I'm interested in the intersection of psychology and data science.
 education:
   courses:
   - course: MSc in Psychology Science
@@ -67,7 +67,7 @@ social:
   link: https://www.linkedin.com/in/yen-chun-chen-profile/
 - icon: cv
   icon_pack: ai
-  link: files/cv.pdf
+  link: https://yenchun.netlify.app/files/cv.pdf
 # - display:
 #     header: true
 #   icon: twitter
