@@ -1,5 +1,5 @@
 ---
-title: Develope Online Experiments through Psychopy
+title: Develope Online Experiments through PsychoPy
 author: Yen Chun Chen
 date: '2024-01-31'
 slug: psychopy

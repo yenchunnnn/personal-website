@@ -15,7 +15,7 @@ tags:
 subtitle: ''
 summary: 'Applying logistic regression, random forest, and SVM to analyze the daily motor activity patterns of participants.'
 authors: []
-lastmod: '2024-02-16T12:59:04+08:00'
+lastmod: '2024-03-11T12:59:04+08:00'
 featured: no
 image:
   caption: 'Friends scenes from NBC'
@@ -49,6 +49,8 @@ So the aim of this project was to investigate whether objective biological metri
 ```r
 # Library package
 library(tidyverse)
+library(zoo)
+library(xts)
 library(rsample)
 library(caret)
 library(vip)
@@ -182,7 +184,19 @@ Notice that this is a multilevel data frame:
 
 ### Cleaning data
 
-Visualize the data to see overall patterns.
+Check if there is any missing data.
+
+
+```r
+# check missing data
+sum(is.na(full_df))
+```
+
+```
+## [1] 0
+```
+
+Visualize the data to see overall patterns. Black line was the original time series, red line was the mean activity in every 30 minutes.
 
 
 ```r
@@ -192,22 +206,36 @@ nest_df <- full_df %>%
     nest() %>%
     arrange(ID)
 
-# plot function
-plot_fun <- function(df) {
-    ggplot(df, aes(timestamp, activity)) +
-        geom_line() +
-        theme(axis.text.x = element_blank())
+# plot function: plotting original & aggregated time series
+plot_fun <- function(zoo, zoo_agg) {
+    ggplot(zoo, aes(Index, zoo)) + 
+        geom_line() + 
+        scale_y_continuous() +
+        # add a line plot for the weekly aggregated time series
+        geom_line(data = zoo_agg, aes(Index, zoo_agg),
+                   # color the aggregated line in red
+                  color = "red") +
+        theme(axis.title = element_blank(),
+              axis.text.x = element_blank())
 }
 
 # create plot columns
 nest_df <- nest_df %>%
-    mutate(plot = map(data, plot_fun))
+    mutate(
+        # create zoo object
+        zoo = map(data, ~zoo(x = .x[["activity"]], order.by = .x[["timestamp"]])),
+        # create the index from every 30 mins
+        hour_index = map(zoo, ~endpoints(.x, on = "minutes", k = 30)),
+        # apply the mean to the time series using the index
+        zoo_agg = map2(zoo, hour_index, ~period.apply(.x, INDEX = .y, FUN = mean)),
+        # plot time series
+        plot = map2(zoo, zoo_agg, plot_fun))
 
 # condition plots
 grid.arrange(grobs = nest_df$plot[1:23], ncol = 4)
 ```
 
-<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 ```r
 # control plots, cause it's too many plots if we put all of them in one figure,
@@ -215,13 +243,13 @@ grid.arrange(grobs = nest_df$plot[1:23], ncol = 4)
 grid.arrange(grobs = nest_df$plot[24:39], ncol = 4)
 ```
 
-<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-7-2.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-8-2.png" width="672" />
 
 ```r
 grid.arrange(grobs = nest_df$plot[40:55], ncol = 4)
 ```
 
-<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-7-3.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-8-3.png" width="672" />
 
 It appears that there were days when subjects did not record activities; thus, we must delete those days. Mean activity of a day that lower than the threshold (threshold = 25) was removed. In this sense, we should preserve within-day variability.
 
@@ -246,7 +274,7 @@ list(full = dim(full_df), clean_subact = dim(clean_df))
 ## [1] 1202071       6
 ```
 
-There may be some days that's not a record for 24 hours, which means fewer than 24\*60 = 1440 minutes.
+There may be some days that's not a record for 24 hours, which means fewer than 24 × 60 = 1440 minutes.
 
 
 ```r
@@ -392,7 +420,7 @@ reshape2::melt(group_act[, c(2, 4:6)], id.vars = "group") %>%
       geom_boxplot()
 ```
 
-<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 It seems like there's still some noisy (outlier) activity, even though we've already log transformed data.
 
@@ -556,7 +584,7 @@ line_plot <- clean_df %>%
 grid.arrange(heat_plot, line_plot, ncol = 1)
 ```
 
-<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 It's interesting that the control group has an opposite circadian rhythm as we thought. But we can see from the heat map that the condition group may have slightly lower activity compared to the control group.
 
@@ -678,9 +706,23 @@ Baseline model: logistic regression
 
 Comparison model: random forest, linear SVM
 
--   Linear SVM: had a higher model performance in past studies
+-   Linear SVM: had a higher model performance in the past study [^8]
 
--   Random forest: ensemble method; easier to explain
+-   Random forest: easier to explain; high accuracy and superiority with imbalanced dataset [^9]
+
+[^8]: Garcia-Ceja, E., Riegler, M., Jakobsen, P., Torresen, J., Nordgreen, T., Oedegaard, K. J., & Fasmer, O. B. (2018). DEPRESJON dataset [Data set]. Zenodo. <https://doi.org/10.5281/zenodo.1219550>
+
+[^9]: A. S. More and D. P. Rana, "Review of random forest classification techniques to resolve data imbalance," *2017 1st International Conference on Intelligent Systems and Information Management (ICISIM),* Aurangabad, India, 2017, pp. 72-78, doi: 10.1109/ICISIM.2017.8122151.
+
+Subsampling for class imbalances
+
+-   down-sampling
+
+-   up-sampling
+
+-   hybrid methods: SMOTE
+
+So we'll have a total of 3 × 4 = 12 models in comparison.
 
 The evaluation of the results was done through a ROC curve-based approach.
 
@@ -699,6 +741,8 @@ myControl <- trainControl(
 ```
 
 #### Logistic regression
+
+Train on the original imbalance dataset.
 
 
 ```r
@@ -731,6 +775,64 @@ model_logis
 ##   0.770514  0.6173913  0.801687
 ```
 
+Train by subsampling methods to address the imbalance issue.
+
+
+```r
+# down-sampling logistic model
+myControl$sampling <- "down"
+
+logis_down <- train(
+    x = train_set[, -13],
+    y = train_set$group,
+    metric = "ROC",
+    method = "glm",
+    trControl = myControl,
+    preProcess = c("center", "scale")
+)
+
+# up-sampling logistic model
+myControl$sampling <- "up"
+
+logis_up <- train(
+    x = train_set[, -13],
+    y = train_set$group,
+    metric = "ROC",
+    method = "glm",
+    trControl = myControl,
+    preProcess = c("center", "scale")
+)
+
+# smote logistic model
+myControl$sampling <- "smote"
+
+logis_smote <- train(
+    x = train_set[, -13],
+    y = train_set$group,
+    metric = "ROC",
+    method = "glm",
+    trControl = myControl,
+    preProcess = c("center", "scale")
+)
+
+# see the values of different models
+logistic <- data.frame()
+for (logis in list(model_logis, logis_down, logis_up, logis_smote)) {
+    logistic <- rbind(logistic, logis$results[, 2:4])
+}
+cbind(logistic_model = c("original", "down", "up", "smote"), logistic)
+```
+
+```
+##   logistic_model       ROC      Sens      Spec
+## 1       original 0.7705140 0.6173913 0.8016870
+## 2           down 0.7587953 0.7010870 0.7059697
+## 3             up 0.7704978 0.6815217 0.7414880
+## 4          smote 0.7697113 0.6771739 0.7407306
+```
+
+Now repeat this process for random forest and SVM.
+
 #### Random forest
 
 
@@ -738,6 +840,8 @@ model_logis
 set.seed(125749)
 
 # train random forest
+myControl$sampling <- NULL
+
 model_rf <- train(
     x = train_set[, -13],
     y = train_set$group,
@@ -804,11 +908,79 @@ model_rf
 ##  and min.node.size = 20.
 ```
 
+
+```r
+# down-sampling rf model
+myControl$sampling <- "down"
+set.seed(125749)
+rf_down <- train(
+    x = train_set[, -13],
+    y = train_set$group,
+    metric = "ROC",
+    method = "ranger",
+    trControl = myControl,
+    preProcess = c("center", "scale"),
+    tuneGrid = expand.grid(mtry = 1:6,
+                           splitrule = 'extratrees',
+                           min.node.size = c(10, 15, 20, 25, 30)),
+    importance = 'impurity'
+)
+
+# up-sampling rf model
+myControl$sampling <- "up"
+set.seed(125749)
+rf_up <- train(
+    x = train_set[, -13],
+    y = train_set$group,
+    metric = "ROC",
+    method = "ranger",
+    trControl = myControl,
+    preProcess = c("center", "scale"),
+    tuneGrid = expand.grid(mtry = 1:6,
+                           splitrule = 'extratrees',
+                           min.node.size = c(10, 15, 20, 25, 30)),
+    importance = 'impurity'
+)
+
+# smote rf model
+myControl$sampling <- "smote"
+set.seed(125749)
+rf_smote <- train(
+    x = train_set[, -13],
+    y = train_set$group,
+    metric = "ROC",
+    method = "ranger",
+    trControl = myControl,
+    preProcess = c("center", "scale"),
+    tuneGrid = expand.grid(mtry = 1:6,
+                           splitrule = 'extratrees',
+                           min.node.size = c(10, 15, 20, 25, 30)),
+    importance = 'impurity'
+)
+
+# see the values of different models
+rf <- data.frame()
+for (rf_mod in list(model_rf, rf_down, rf_up, rf_smote)) {
+    rf <- rbind(rf, rf_mod$results[which.max(rf_mod$results$ROC), c(1, 3:6)])
+}
+cbind(rf_model = c("original", "down", "up", "smote"), rf)
+```
+
+```
+##    rf_model mtry min.node.size       ROC      Sens      Spec
+## 3  original    1            20 0.7731507 0.5467391 0.7901812
+## 31     down    1            20 0.7724055 0.6913043 0.6751916
+## 2        up    1            15 0.7769022 0.6521739 0.7122572
+## 4     smote    1            25 0.7736200 0.6978261 0.6805940
+```
+
 #### SVM
 
 
 ```r
 # train linear svm
+myControl$sampling <- NULL
+
 model_svm <- train(
     # change to formula, avoiding kernlab class probability calculations failed
     group ~ .,        
@@ -836,128 +1008,89 @@ model_svm
 ## Resampling results across tuning parameters:
 ## 
 ##   C         ROC        Sens       Spec     
-##   1.000000  0.7671221  0.4000000  0.8795961
-##   1.210526  0.7690447  0.4304348  0.8850965
-##   1.421053  0.7708282  0.4326087  0.8812355
-##   1.631579  0.7706679  0.4010870  0.8858361
-##   1.842105  0.7701435  0.4608696  0.8665399
-##   2.052632  0.7698923  0.4434783  0.8773181
-##   2.263158  0.7693097  0.3967391  0.8742530
-##   2.473684  0.7693350  0.3902174  0.9027799
-##   2.684211  0.7694950  0.3880435  0.8989011
-##   2.894737  0.7698319  0.4445652  0.8773240
-##   3.105263  0.7698426  0.3826087  0.8996644
-##   3.315789  0.7693033  0.4239130  0.8904604
-##   3.526316  0.7688119  0.4858696  0.8673151
-##   3.736842  0.7688365  0.4010870  0.8781051
-##   3.947368  0.7685025  0.2478261  0.9382269
-##   4.157895  0.7681553  0.3815217  0.8958509
-##   4.368421  0.7683899  0.3739130  0.9058747
-##   4.578947  0.7686496  0.3652174  0.9051025
-##   4.789474  0.7690439  0.3956522  0.8773418
-##   5.000000  0.7691192  0.3793478  0.8827562
+##   1.000000  0.7671221  0.3913043  0.8727413
+##   1.210526  0.7690447  0.4010870  0.8665637
+##   1.421053  0.7708282  0.3923913  0.8911850
+##   1.631579  0.7706679  0.4695652  0.8534333
+##   1.842105  0.6714277  0.3771739  0.8912029
+##   2.052632  0.7698923  0.4097826  0.8611553
+##   2.263158  0.7693097  0.4369565  0.8603742
+##   2.473684  0.7693350  0.4532609  0.8842768
+##   2.684211  0.7694950  0.2804348  0.9189189
+##   2.894737  0.7698319  0.4467391  0.8811999
+##   3.105263  0.7698426  0.3880435  0.8926938
+##   3.315789  0.7693033  0.3467391  0.9050668
+##   3.526316  0.7688119  0.4260870  0.8857796
+##   3.736842  0.7688365  0.4065217  0.8773656
+##   3.947368  0.7685025  0.4782609  0.8526374
+##   4.157895  0.7681553  0.3793478  0.8881467
+##   4.368421  0.7683899  0.4086957  0.8765845
+##   4.578947  0.7686496  0.3902174  0.8872914
+##   4.789474  0.6715788  0.3663043  0.8942620
+##   5.000000  0.7691192  0.4467391  0.8765399
 ## 
 ## ROC was used to select the optimal model using the largest value.
 ## The final value used for the model was C = 1.421053.
 ```
 
-Predict on training set.
-
 
 ```r
-# Create model_list
-model_list <- list(logistic = model_logis, rf = model_rf, svm = model_svm)
+# down-sampling svm model
+myControl$sampling <- "down"
 
-# predict on training set to see if it's overfitting later
-for (i in 1:length(model_list)) {
-    print(confusionMatrix(predict(model_list[[i]], train_set),
-                          train_set$group))
+svm_down <- train(
+    group ~ .,        
+    data = train_set,
+    metric = "ROC",
+    method = "svmLinear",
+    trControl = myControl,
+    preProcess = c("center", "scale"),
+    tuneGrid = expand.grid(C = seq(1, 5, length = 20))
+)
+
+# up-sampling svm model
+myControl$sampling <- "up"
+
+svm_up <- train(
+    group ~ .,        
+    data = train_set,
+    metric = "ROC",
+    method = "svmLinear",
+    trControl = myControl,
+    preProcess = c("center", "scale"),
+    tuneGrid = expand.grid(C = seq(1, 5, length = 20))
+)
+
+# smote svm model
+myControl$sampling <- "smote"
+
+svm_smote <- train(
+    group ~ .,        
+    data = train_set,
+    metric = "ROC",
+    method = "svmLinear",
+    trControl = myControl,
+    preProcess = c("center", "scale"),
+    tuneGrid = expand.grid(C = seq(1, 5, length = 20))
+)
+
+# see the values of different models
+svm <- data.frame()
+for (svm_mod in list(model_svm, svm_down, svm_up, svm_smote)) {
+    svm <- rbind(svm, svm_mod$results[which.max(svm_mod$results$ROC), 1:4])
 }
+cbind(svm_model = c("original", "down", "up", "smote"), svm)
 ```
 
 ```
-## Confusion Matrix and Statistics
-## 
-##            Reference
-## Prediction  condition control
-##   condition       140      50
-##   control          90     274
-##                                          
-##                Accuracy : 0.7473         
-##                  95% CI : (0.7089, 0.783)
-##     No Information Rate : 0.5848         
-##     P-Value [Acc > NIR] : 9.529e-16      
-##                                          
-##                   Kappa : 0.4661         
-##                                          
-##  Mcnemar's Test P-Value : 0.0009804      
-##                                          
-##             Sensitivity : 0.6087         
-##             Specificity : 0.8457         
-##          Pos Pred Value : 0.7368         
-##          Neg Pred Value : 0.7527         
-##              Prevalence : 0.4152         
-##          Detection Rate : 0.2527         
-##    Detection Prevalence : 0.3430         
-##       Balanced Accuracy : 0.7272         
-##                                          
-##        'Positive' Class : condition      
-##                                          
-## Confusion Matrix and Statistics
-## 
-##            Reference
-## Prediction  condition control
-##   condition       162      36
-##   control          68     288
-##                                          
-##                Accuracy : 0.8123         
-##                  95% CI : (0.7772, 0.844)
-##     No Information Rate : 0.5848         
-##     P-Value [Acc > NIR] : < 2.2e-16      
-##                                          
-##                   Kappa : 0.6055         
-##                                          
-##  Mcnemar's Test P-Value : 0.002367       
-##                                          
-##             Sensitivity : 0.7043         
-##             Specificity : 0.8889         
-##          Pos Pred Value : 0.8182         
-##          Neg Pred Value : 0.8090         
-##              Prevalence : 0.4152         
-##          Detection Rate : 0.2924         
-##    Detection Prevalence : 0.3574         
-##       Balanced Accuracy : 0.7966         
-##                                          
-##        'Positive' Class : condition      
-##                                          
-## Confusion Matrix and Statistics
-## 
-##            Reference
-## Prediction  condition control
-##   condition       117      33
-##   control         113     291
-##                                           
-##                Accuracy : 0.7365          
-##                  95% CI : (0.6977, 0.7727)
-##     No Information Rate : 0.5848          
-##     P-Value [Acc > NIR] : 7.149e-14       
-##                                           
-##                   Kappa : 0.4285          
-##                                           
-##  Mcnemar's Test P-Value : 6.231e-11       
-##                                           
-##             Sensitivity : 0.5087          
-##             Specificity : 0.8981          
-##          Pos Pred Value : 0.7800          
-##          Neg Pred Value : 0.7203          
-##              Prevalence : 0.4152          
-##          Detection Rate : 0.2112          
-##    Detection Prevalence : 0.2708          
-##       Balanced Accuracy : 0.7034          
-##                                           
-##        'Positive' Class : condition       
-## 
+##    svm_model        C       ROC      Sens      Spec
+## 3   original 1.421053 0.7708282 0.3923913 0.8911850
+## 17      down 4.368421 0.7790955 0.7206522 0.6890407
+## 20        up 5.000000 0.7812359 0.6989130 0.7261063
+## 9      smote 2.684211 0.7836008 0.6739130 0.7507455
 ```
+
+
 
 ### Validation
 
@@ -979,6 +1112,9 @@ for (i in 1:length(model_list)) {
 
 
 ```r
+# create model_list
+model_list <- list(model_logis, logis_down, logis_up, logis_smote, model_rf, rf_down, rf_up, rf_smote, model_svm, svm_down, svm_up, svm_smote)
+
 # gather metrics together
 acc <- c()
 bal <- c()
@@ -1001,9 +1137,11 @@ for (num in 1:length(model_list)) {
     auc <- auc %>% append(pROC::auc(ROC))
 }
 
-metric <- data.frame(Model = c("Logistic", "Random Forest", "SVM"),
+metric <- data.frame(Model = c("Logistic", "Logis_down", "Logis_up", "Logis_smote",
+                               "RF", "RF_down", "RF_up", "RF_smote",
+                               "SVM", "SVM_down", "SVM_up", "SVM_smote"),
                      Accuracy = acc,
-                     Balanced_ACC = bal, 
+                     Balance_ACC = bal, 
                      Sensitivity = sen,
                      Specificity = spe,
                      PPV = ppv,
@@ -1011,32 +1149,65 @@ metric <- data.frame(Model = c("Logistic", "Random Forest", "SVM"),
                      AUC = auc) %>% 
     mutate(across(-1, ~ round(.x, 3)))
 
-metric
+# print in order
+metric %>%
+    arrange(desc(Sensitivity), desc(AUC), desc(Accuracy), desc(Specificity))
 ```
 
 ```
-##           Model Accuracy Balanced_ACC Sensitivity Specificity   PPV   NPV   AUC
-## 1      Logistic    0.735        0.714       0.586       0.842 0.725 0.741 0.714
-## 2 Random Forest    0.752        0.734       0.626       0.842 0.738 0.760 0.734
-## 3           SVM    0.739        0.707       0.515       0.899 0.785 0.723 0.707
+##          Model Accuracy Balance_ACC Sensitivity Specificity   PPV   NPV   AUC
+## 1     RF_smote    0.727       0.728       0.737       0.719 0.652 0.794 0.728
+## 2        RF_up    0.727       0.727       0.727       0.727 0.655 0.789 0.727
+## 3      RF_down    0.714       0.716       0.727       0.705 0.637 0.784 0.716
+## 4       SVM_up    0.748       0.743       0.717       0.770 0.689 0.793 0.743
+## 5   Logis_down    0.744       0.738       0.707       0.770 0.686 0.787 0.738
+## 6     Logis_up    0.761       0.751       0.697       0.806 0.719 0.789 0.751
+## 7  Logis_smote    0.756       0.748       0.697       0.799 0.711 0.787 0.748
+## 8     SVM_down    0.752       0.744       0.697       0.791 0.704 0.786 0.744
+## 9    SVM_smote    0.752       0.744       0.697       0.791 0.704 0.786 0.744
+## 10          RF    0.752       0.734       0.626       0.842 0.738 0.760 0.734
+## 11    Logistic    0.735       0.714       0.586       0.842 0.725 0.741 0.714
+## 12         SVM    0.744       0.720       0.576       0.863 0.750 0.741 0.720
 ```
 
-Based on the measurements, we discovered that random forest have the highest balanced accuracy and AUC. But regardless of the model, they share the same high specificity and low sensitivity. This indicates that while our models performed well in categorizing control cases, they were less likely to accurately categorize condition cases.
+
+```r
+# plot sensitivity vs models
+ggplot(metric[, c(1, 4)], aes(Sensitivity, reorder(Model, Sensitivity))) +
+    geom_point() +
+    geom_segment(aes(xend = 0.55, yend = reorder(Model, Sensitivity))) +
+    labs(y = "Models")
+```
+
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+
+
+```r
+# plot auc vs models
+ggplot(metric[, c(1, 8)], aes(AUC, reorder(Model, AUC))) +
+    geom_point() +
+    geom_segment(aes(xend = 0.7, yend = reorder(Model, AUC))) +
+    labs(y = "Models")
+```
+
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+
+We found that different metrics have different results for the model's performance. If it's based on AUC, then the up-sampling logistic model is the best. But if it's based on sensitivity, then SMOTE random forest is the best. We decided to use sensitivity to evaluate model performance because, in the context of clinical diagnosis, the ability to correctly classify condition cases would be a priority concern.
 
 #### Variable importance
 
-Let's see the variable importance of the random forest model.
+Let's see the variable importance of the SMOTE random forest model.
 
 
 ```r
 # visualize rf
-vip(model_rf, num_features = 12)
+vip(rf_smote, num_features = 12)
 ```
 
-<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
-According to the figure, the five most important features in the random forest model were the median, zero proportion, mean, quantile 95, and skewness of daily activity.
+According to the figure, the top five important features in the SMOTE random forest model were the median, mean, quantile 95, zero proportion, and skewness of daily activity.
 
 ## Conclusion
 
-In conclusion, our investigation has demonstrated the potential of a number of machine learning algorithms to distinguish between depressed and healthy participants in time series of motor activity. Furthermore, random forest outperformed other methods in our analysis for the classification task. Additionally, the extracted statistical features indicated that the information they include describes the primary aspects of a participant's daily activities, making it possible to distinguish between depressed and healthy participants. Nevertheless, because of its limited sensitivity, we must integrate this kind of index with other indicators (e.g., clinical assessments) to get the big picture if we would like to implement it to aid in clinical diagnosis.
+In conclusion, our investigation has demonstrated the potential of a number of machine learning algorithms to distinguish between depressed and healthy participants in time series of motor activity. Furthermore, SMOTE random forest outperformed other methods in our analysis for the classification task based on the sensitivity metric. Additionally, the extracted statistical features indicated that the information they include describes the primary aspects of a participant's daily activities, making it possible to distinguish between depressed and healthy participants. Nevertheless, we must integrate this kind of index with other indicators (e.g., clinical assessments) to get the big picture if we would like to implement it to aid in clinical diagnosis.

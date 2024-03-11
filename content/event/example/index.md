@@ -39,7 +39,7 @@ The conference was hosted by the Taiwanese Psychological Association.
 
 This paper is largely based on my master's thesis ---
 
-> Chen, Y. C., & Lee, Y. C. (accepted). Love in Everyday Social Interactions Matters: Positivity Resonance Accumulates Meaning in Life. *Chinese Journal of Psychology.* (TSSCI)
+> Chen, Y. C., & Lee, Y. C. (in press). Love in Everyday Social Interactions Matters: Positivity Resonance Accumulates Meaning in Life. *Chinese Journal of Psychology.* (TSSCI)
 
 What I've done in this research:
 
