@@ -88,10 +88,10 @@ superuser: true
 
 Thanks for stopping by! {{< icon name="face-laugh-beam" pack="far" >}}
 
-Coming from a background in social psychology and clinical psychology, I'm passionate about solving social problems and addressing mental health issues through analytics. I have over 1 year of experience applying psychological research methods in real-world settings, including designing experiments, collecting, preprocessing, analyzing, and modeling data, as well as presenting insights.
+Coming from a background in social and clinical psychology, I'm passionate about solving social problems through analytics. I have over 1 year of experience applying psychological research methods in real-world settings, including designing experiments, collecting, preprocessing, analyzing, and modeling data, as well as presenting insights.
 
 If you’re looking for someone to drive impactful decision-making with data, please feel free to contact me! 
 
-> Interests: Machine Learning {{< icon name="chart-line" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Social Interaction {{< icon name="handshake-simple" pack="fas" >}}
+> Interests: Data Analytics {{< icon name="chart-line" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Social Interaction {{< icon name="handshake-simple" pack="fas" >}}
 
 {style="text-align: justify;"}
