@@ -1133,7 +1133,7 @@ for (num in 1:length(model_list)) {
     spe <- spe %>% append(confus$byClass[["Specificity"]])
     ppv <- ppv %>% append(confus$byClass[["Pos Pred Value"]])
     npv <- npv %>% append(confus$byClass[["Neg Pred Value"]])
-    ROC <- pROC::roc(as.numeric(test_set$group), as.numeric(prediction))
+    ROC <- pROC::roc(test_set$group, predict(model_list[[num]], test_set, type = "prob")[,"condition"])
     auc <- auc %>% append(pROC::auc(ROC))
 }
 
@@ -1156,18 +1156,18 @@ metric %>%
 
 ```
 ##          Model Accuracy Balance_ACC Sensitivity Specificity   PPV   NPV   AUC
-## 1     RF_smote    0.727       0.728       0.737       0.719 0.652 0.794 0.728
-## 2        RF_up    0.727       0.727       0.727       0.727 0.655 0.789 0.727
-## 3      RF_down    0.714       0.716       0.727       0.705 0.637 0.784 0.716
-## 4       SVM_up    0.748       0.743       0.717       0.770 0.689 0.793 0.743
-## 5   Logis_down    0.744       0.738       0.707       0.770 0.686 0.787 0.738
-## 6     Logis_up    0.761       0.751       0.697       0.806 0.719 0.789 0.751
-## 7  Logis_smote    0.756       0.748       0.697       0.799 0.711 0.787 0.748
-## 8     SVM_down    0.752       0.744       0.697       0.791 0.704 0.786 0.744
-## 9    SVM_smote    0.752       0.744       0.697       0.791 0.704 0.786 0.744
-## 10          RF    0.752       0.734       0.626       0.842 0.738 0.760 0.734
-## 11    Logistic    0.735       0.714       0.586       0.842 0.725 0.741 0.714
-## 12         SVM    0.744       0.720       0.576       0.863 0.750 0.741 0.720
+## 1     RF_smote    0.727       0.728       0.737       0.719 0.652 0.794 0.786
+## 2        RF_up    0.727       0.727       0.727       0.727 0.655 0.789 0.796
+## 3      RF_down    0.714       0.716       0.727       0.705 0.637 0.784 0.793
+## 4       SVM_up    0.748       0.743       0.717       0.770 0.689 0.793 0.815
+## 5   Logis_down    0.744       0.738       0.707       0.770 0.686 0.787 0.821
+## 6     Logis_up    0.761       0.751       0.697       0.806 0.719 0.789 0.825
+## 7  Logis_smote    0.756       0.748       0.697       0.799 0.711 0.787 0.825
+## 8     SVM_down    0.752       0.744       0.697       0.791 0.704 0.786 0.817
+## 9    SVM_smote    0.752       0.744       0.697       0.791 0.704 0.786 0.813
+## 10          RF    0.752       0.734       0.626       0.842 0.738 0.760 0.794
+## 11    Logistic    0.735       0.714       0.586       0.842 0.725 0.741 0.822
+## 12         SVM    0.744       0.720       0.576       0.863 0.750 0.741 0.803
 ```
 
 

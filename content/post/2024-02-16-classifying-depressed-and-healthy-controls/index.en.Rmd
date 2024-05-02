@@ -757,7 +757,7 @@ for (num in 1:length(model_list)) {
     spe <- spe %>% append(confus$byClass[["Specificity"]])
     ppv <- ppv %>% append(confus$byClass[["Pos Pred Value"]])
     npv <- npv %>% append(confus$byClass[["Neg Pred Value"]])
-    ROC <- pROC::roc(as.numeric(test_set$group), as.numeric(prediction))
+    ROC <- pROC::roc(test_set$group, predict(model_list[[num]], test_set, type = "prob")[,"condition"])
     auc <- auc %>% append(pROC::auc(ROC))
 }
 
