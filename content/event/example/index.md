@@ -1,5 +1,5 @@
 ---
-abstract: The positivity resonance theory defines the emotion of love as a collective affective state which is termed ─ positivity resonance, characterized by shared positive affect, caring nonverbal synchrony, and biological synchrony. The present study examined whether daily experiences of positivity resonance influence meaning in life (MIL) through the increment of social connection, both concurrently and prospectively. At time 1 (*N* = 144), we measured perceived positivity resonance at the trait level, MIL and social connection. Next, we assessed perceived positivity resonance at the episodic level with Day Reconstruction Method across 7 days (*N* = 135). Finally, two follow-up surveys were administered one month (*N* = 113) and two months (*N* = 99) later. Participants again completed the questionnaires of MIL and social connection. Results suggest that social connection mediates the links between perceived positivity resonance and MIL, both cross-sectionally, and longitudinally. These mediating effects remain statistically significant when controlling for the individual-level positive and negative affect, and social interaction quantity. These findings indicate that momentary experience of love while interacting with others, may be an influential way to a meaningful life.
+abstract: Positivity resonance theory defines the emotion of love as a collective affective state, referred to as positivity resonance, characterized by shared positive affect, caring nonverbal synchrony, and biological synchrony. This study examined whether daily experiences of positivity resonance concurrently and prospectively influence meaning in life (MIL) through the increment of social connection. At time 1 (N = 144), perceived positivity resonance was measured at the trait level, along with MIL and social connection. Next, perceived positivity resonance was assessed at the episodic level via the Day Reconstruction Method across seven days (N = 135). Finally, two follow-up surveys were administered one (N = 113) and two months (N = 99) later. Participants again completed the questionnaires on MIL and social connection. Results suggest that social connection cross-sectionally and longitudinally mediates the links between perceived positivity resonance and MIL. These mediating effects remain statistically significant even after controlling for the individual-level positive and negative affect and amount of social interaction. These findings indicate that momentary experience of love while interacting with others may be an influential way to a meaningful life.
 address:
   city: ""
   country: ""
@@ -26,20 +26,24 @@ image:
 # - example
 # publishDate: "2017-01-01T00:00:00Z"
 # slides: example
-summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. This research paper was accepted by the Chinese Journal of Psychology. The primary statistical model was multilevel structural equation modeling.
+summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. **Research Method:** Diary study, Survey, Longitudinal Research; **Research Type:** Generative Research, Quantitative
 tags: [R Programming, longitudinal research, meaning in life, positive emotions, social interactions]
-title: Positivity Resonance Accumulates Meaning in Life
+title: Love in Everyday Social Interactions - Accumulating Meaning in Life through Positivity Resonance
 url_code: ""
-url_pdf: "files/oral-present-provement.pdf"
+url_pdf: ""
 url_slides: ""
 url_video: ""
+links:
+- icon_pack: fab
+  name: Paper (English Extended Abstract p.383-388)
+  url: https://yenchun.netlify.app/files/publication.pdf
 ---
 
 The conference was hosted by the Taiwanese Psychological Association.
 
 This paper is largely based on my master's thesis ---
 
-> Chen, Y. C., & Lee, Y. C. (in press). Love in Everyday Social Interactions Matters: Positivity Resonance Accumulates Meaning in Life. *Chinese Journal of Psychology.* (TSSCI)
+> Chen, Y. C., & Lee, Y. C. (2024). Love in Everyday Social Interactions: Accumulating Meaning in Life through Positivity Resonance. *Chinese Journal of Psychology(TSSCI), 66*(3), 361-388. https://doi.org/10.6129/CJP.202409_66(3).0003
 
 What I've done in this research:
 

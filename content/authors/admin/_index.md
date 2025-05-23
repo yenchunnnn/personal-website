@@ -1,6 +1,6 @@
 ---
 title: ""
-bio: I hold a MSc in psychology. I'm interested in the intersection of psychology and data science.
+bio: I hold a MSc in psychology. I'm interested in the intersection of psychology and data.
 education:
   courses:
   - course: MSc in Psychology Science
@@ -15,7 +15,7 @@ interests:
 - Affective Science
 - Social Psychology
 organizations:
-- name: Psychology ⨯ Data Science
+- name: Psychology ⨯ Data
   #url: https://www.stanford.edu/
 role: ""
 # skills:
@@ -86,12 +86,12 @@ superuser: true
 #highlight_name: true
 ---
 
-Thanks for stopping by! {{< icon name="face-laugh-beam" pack="far" >}}
+Thanks for stopping by {{< icon name="face-laugh-beam" pack="far" >}}
 
-Coming from a background in social and clinical psychology, I'm passionate about solving social problems through analytics. I have over 1 year of experience applying psychological research methods in real-world settings, including designing experiments, collecting, preprocessing, analyzing, and modeling data, as well as presenting insights.
+Coming from a background in social psychology and clinical psychology, I'm passionate about solving social problems through analytics. If you’re looking for someone to drive positive impact in our society with data, please feel free to contact me!
 
-If you’re looking for someone to drive impactful decision-making with data, please feel free to contact me! 
+Fun Fact: I've met people worldwide on six dating apps to learn about their stories and cultures. 
 
-> Interests: Data Analytics {{< icon name="chart-line" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Social Interaction {{< icon name="handshake-simple" pack="fas" >}}
+> Interests: Social Interaction {{< icon name="handshake-simple" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Data Analytics {{< icon name="chart-line" pack="fas" >}}
 
 {style="text-align: justify;"}
