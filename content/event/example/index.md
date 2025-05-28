@@ -26,7 +26,7 @@ image:
 # - example
 # publishDate: "2017-01-01T00:00:00Z"
 # slides: example
-summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. **Research Method:** Diary study, Survey, Longitudinal Research; **Research Type:** Generative Research, Quantitative
+summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. **Research Method:** Diary Study, Survey, Longitudinal Research; **Research Type:** Generative, Quantitative
 tags: [R Programming, longitudinal research, meaning in life, positive emotions, social interactions]
 title: Love in Everyday Social Interactions - Accumulating Meaning in Life through Positivity Resonance
 url_code: ""

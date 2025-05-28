@@ -86,11 +86,11 @@ superuser: true
 #highlight_name: true
 ---
 
-Thanks for stopping by {{< icon name="face-laugh-beam" pack="far" >}}
+Thanks for stopping by. :blush:
 
-Coming from a background in social psychology and clinical psychology, I'm passionate about solving social problems through analytics. If you’re looking for someone to drive positive impact in our society with data, please feel free to contact me!
+Coming from a background in social and clinical psychology, I'm passionate about solving human problems through analytics. With previous experience in healthcare and academia. If you’re looking for someone to drive positive impact on our society, please feel free to contact me!
 
-Fun Fact: I've met people worldwide on six dating apps to learn about their stories and cultures. 
+Fun Fact: I've met people worldwide on 6 dating apps to learn about their stories and cultures. :relieved:
 
 > Interests: Social Interaction {{< icon name="handshake-simple" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Data Analytics {{< icon name="chart-line" pack="fas" >}}
 

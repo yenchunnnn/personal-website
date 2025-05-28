@@ -82,7 +82,7 @@ sections:
       tag: '*'
     - name: R Programming
       tag: R Programming
-    - name: PostgreSQL
+    - name: SQL
       tag: PostgreSQL
     - name: Other
       tag: Other
@@ -96,6 +96,16 @@ sections:
     flip_alt_rows: false
     view: showcase
   id: projects
+- block: collection
+  content:
+    filters:
+      folders:
+      - event
+    title: Recent Talks
+  design:
+    columns: "2"
+    view: compact
+  id: talks
 - block: collection
   content:
     count: 5
@@ -150,16 +160,6 @@ sections:
 #   design:
 #     columns: "2"
 #     view: citation
-- block: collection
-  content:
-    filters:
-      folders:
-      - event
-    title: Recent Talks
-  design:
-    columns: "2"
-    view: compact
-  id: talks
 - block: accomplishments
   content:
     date_format: Jan 2006
