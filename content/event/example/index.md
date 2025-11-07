@@ -1,41 +1,55 @@
 ---
-abstract: Positivity resonance theory defines the emotion of love as a collective affective state, referred to as positivity resonance, characterized by shared positive affect, caring nonverbal synchrony, and biological synchrony. This study examined whether daily experiences of positivity resonance concurrently and prospectively influence meaning in life (MIL) through the increment of social connection. At time 1 (N = 144), perceived positivity resonance was measured at the trait level, along with MIL and social connection. Next, perceived positivity resonance was assessed at the episodic level via the Day Reconstruction Method across seven days (N = 135). Finally, two follow-up surveys were administered one (N = 113) and two months (N = 99) later. Participants again completed the questionnaires on MIL and social connection. Results suggest that social connection cross-sectionally and longitudinally mediates the links between perceived positivity resonance and MIL. These mediating effects remain statistically significant even after controlling for the individual-level positive and negative affect and amount of social interaction. These findings indicate that momentary experience of love while interacting with others may be an influential way to a meaningful life.
+title: "Love in Everyday Social Interactions - Accumulating Meaning in Life through
+  Positivity Resonance"
 address:
-  city: ""
-  country: ""
-  postcode: ""
-  region: ""
-  street: ""
-all_day: true
-authors: []
+  city: ''
+  country: ''
+  postcode: ''
+  region: ''
+  street: ''
 date: "2023-10-21T8:30:00Z"
+authors: []
+all_day: yes
 date_end: "2023-10-22T17:10:00Z"
 event: The 62nd Taiwan Psychology Annual Conference
-event_url: https://www.tpa-tw.org/2023program
-featured: false
+event_url: "https://www.tpa-tw.org/2023program"
+featured: no
 location: No.48, Hsuan Chuang Rd., Hsinchu City 300, Taiwan, R.O.C.
 image:
-  caption: 'Photo took at 10-21-2023'
+  caption: "Photo took at 10-21-2023"
   focal_point: Right
-# links:
-# - icon: linkedin
-#   icon_pack: fab
-#   name: Connect
-#   url: https://www.linkedin.com/in/yen-chun-chen-profile/
-# projects:
-# - example
-# publishDate: "2017-01-01T00:00:00Z"
-# slides: example
-summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference. **Research Method:** Diary Study, Survey, Longitudinal Research; **Research Type:** Generative, Quantitative
-tags: [R Programming, longitudinal research, meaning in life, positive emotions, social interactions]
-title: Love in Everyday Social Interactions - Accumulating Meaning in Life through Positivity Resonance
-url_code: ""
-url_pdf: ""
-url_slides: ""
-url_video: ""
+summary: I gave an oral presentation at the 62nd Taiwan Psychology Annual Conference.
+  **Research Type:** Generative, Quantitative;
+  **Research Method:** Diary Study, Survey, Longitudinal Research
+tags:
+- R Programming
+- longitudinal research
+- meaning in life
+- positive emotions
+- social interactions
+abstract: "Positivity resonance theory defines the emotion of love as a collective
+  affective state, referred to as positivity resonance, characterized by shared positive
+  affect, caring nonverbal synchrony, and biological synchrony. This study examined
+  whether daily experiences of positivity resonance concurrently and prospectively
+  influence meaning in life (MIL) through the increment of social connection. At time
+  1 (N = 144), perceived positivity resonance was measured at the trait level, along
+  with MIL and social connection. Next, perceived positivity resonance was assessed
+  at the episodic level via the Day Reconstruction Method across seven days (N = 135).
+  Finally, two follow-up surveys were administered one (N = 113) and two months (N
+  = 99) later. Participants again completed the questionnaires on MIL and social connection.
+  Results suggest that social connection cross-sectionally and longitudinally mediates
+  the links between perceived positivity resonance and MIL. These mediating effects
+  remain statistically significant even after controlling for the individual-level
+  positive and negative affect and amount of social interaction. These findings indicate
+  that momentary experience of love while interacting with others may be an influential
+  way to a meaningful life."
+url_code: ''
+url_pdf: ''
+url_slides: ''
+url_video: ''
 links:
 - icon_pack: fab
-  name: Paper (English Extended Abstract p.383-388)
+  name: "Paper (English Extended Abstract p.383-388)"
   url: https://yenchun.netlify.app/files/publication.pdf
 ---
 

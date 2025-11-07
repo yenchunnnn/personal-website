@@ -15,7 +15,7 @@ interests:
 - Affective Science
 - Social Psychology
 organizations:
-- name: Psychology ⨯ Data
+# - name: Psychology ⨯ Data
   #url: https://www.stanford.edu/
 role: ""
 # skills:
@@ -88,9 +88,9 @@ superuser: true
 
 Thanks for stopping by. :blush:
 
-Coming from a background in social and clinical psychology, I'm passionate about solving human problems through analytics. With previous experience in healthcare and academia. If you’re looking for someone to drive positive impact on our society, please feel free to contact me!
+Coming from a background in social psychology and clinical psychology, I'm passionate about exploring human issues through analytics. If you’re looking for someone to drive positive impact in our society, please feel free to contact me!
 
-Fun Fact: I've met people worldwide on 6 dating apps to learn about their stories and cultures. :relieved:
+Fun fact: I'm obsessed with learning about other cultures. So far, I've exchanged thoughts with people from 20+ nationalities, including US, Estonia, Serbia, Türkiye, Iran, Armenia, South Africa, Sri Lanka, etc. :relieved:
 
 > Interests: Social Interaction {{< icon name="handshake-simple" pack="fas" >}} | Affective Science {{< icon name="brain" pack="fas" >}} | Data Analytics {{< icon name="chart-line" pack="fas" >}}
 
